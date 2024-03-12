@@ -3,10 +3,11 @@ from tkinter import ttk
 from characters import *
 import random
 import time
+from level2 import *
 
 # Crear la raíz
 app = tk.Tk()
-app.title("ONE ENEMIES GAME")
+app.title("TWO ENEMIES GAME")
 app.geometry("1100x580")
 app.resizable(0, 0)
 app.configure(bg="#222831")
@@ -124,7 +125,11 @@ def start_battle(class_type: int, name: str):
         label_game_result.grid(row=0, column=1, columnspan=2, sticky="s")
         buttonn_exit = tk.Button(game_finished_window, text="Salir", bg="#76ABAE", fg="#31363F", width=15, height=2, borderwidth=1,
                                  command=lambda: [game_finished_window.destroy(), battle_window.destroy()])
-        buttonn_exit.grid(row=1, column=1, columnspan=2, pady=10, sticky="n")
+        buttonn_exit.grid(row=1, column=1, pady=10, sticky="n")
+
+        buttonn_next_level = tk.Button(game_finished_window, text="Siguiente nivel", bg="#76ABAE", fg="#31363F", width=15, height=2, borderwidth=1,
+                                 command=lambda: [level2(player, app), game_finished_window.destroy(), battle_window.destroy()])
+        buttonn_next_level.grid(row=1, column=2, pady=10, sticky="n")
                                                     
 
     player = None

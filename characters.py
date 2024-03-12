@@ -51,8 +51,8 @@ class wizard(Character):
         super().__init__(name)
         self.health = 100
         self.max_health = 100
-        self.health_before_attack = 100
-        self.damage = 8
+        self.health_before_attack = self.max_health
+        self.damage = 9
         self.special_damage = 12
         self.defense = 12
         self.special_defense = 15
@@ -61,11 +61,11 @@ class normal_monster(Character):
     def __init__(self, name: str):
         super().__init__(name)
         self.health = 100
-        self.max_health = 80
-        self.health_before_attack = 100
-        self.damage = 12
-        self.special_damage = 8
-        self.defense = 12
+        self.max_health = 100
+        self.health_before_attack = self.max_health
+        self.damage = 9
+        self.special_damage = 10
+        self.defense = 10
         self.special_defense = 10
 
 class super_monster(Character):
@@ -73,8 +73,8 @@ class super_monster(Character):
         super().__init__("Super Goblin")
         self.health = 150
         self.max_health = 150
-        self.health_before_attack = 100
-        self.damage = 20
-        self.special_damage = 10
-        self.defense = 20
-        self.special_defense = 20
+        self.health_before_attack = self.max_health
+        self.damage = 15
+        self.special_damage = 15
+        self.defense = 15
+        self.special_defense = 15
