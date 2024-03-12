@@ -39,7 +39,7 @@ def start_battle(class_type: int, name: str):
         if enemy.health <= 0:
             enemy.health = 0
             enemy_health.set(enemy.health)
-            player_battle_info.set("Has ganado")
+            game_finished(0)
             decrease_health_bar(enemy, 0)  # Muestra la barra de salud completa como 0 (totalmente vacía)
         else:
             player_battle_info.set(f"{player.name} ha hecho {int((enemy.health_before_attack - enemy.health))} de daño")
@@ -54,7 +54,7 @@ def start_battle(class_type: int, name: str):
         if enemy.health <= 0:
             enemy.health = 0
             enemy_health.set(enemy.health)
-            player_battle_info.set("Has ganado")
+            game_finished(0)
             decrease_health_bar(enemy, 0)  # Muestra la barra de salud completa como 0 (totalmente vacía)
         else:
             player_battle_info.set(f"{player.name} ha hecho {int(enemy.health_before_attack - enemy.health)} de daño")
@@ -72,7 +72,7 @@ def start_battle(class_type: int, name: str):
             if player.health <= 0:
                 player.health = 0
                 player_health.set(player.health)
-                player_battle_info.set("Has perdido")
+                game_finished(1)
                 decrease_health_bar(player, 0)  # Muestra la barra de salud completa como 0 (totalmente vacía)
             else:
                 decrease_health_bar(player, (player.health / player.max_health) * 350)
@@ -84,7 +84,7 @@ def start_battle(class_type: int, name: str):
             if player.health <= 0:
                 player.health = 0
                 player_health.set(player.health)
-                player_battle_info.set("Has perdido")
+                game_finished(1)
                 decrease_health_bar(player, 0)  # Muestra la barra de salud completa como 0 (totalmente vacía)
             else:
                 decrease_health_bar(player, (player.health / player.max_health) * 350)
@@ -97,6 +97,35 @@ def start_battle(class_type: int, name: str):
         else:
             enemy_health_bar.delete("enemy_health_bar")
             enemy_health_bar.create_rectangle(10, 10, 10 + health, 30, fill="green", outline="black", tags="enemy_health_bar")
+
+    def game_finished(result: int):
+
+        game_result = tk.StringVar(value=" ")
+        if result == 0:
+            game_result.set("HAS GANADO :D")
+        else:
+            game_result.set("HAS PERDIDO D:")
+        
+
+        #Configuramos la ventana
+        game_finished_window = tk.Toplevel(battle_window)
+        game_finished_window.geometry("300x300")
+        game_finished_window.configure(bg="#222831") 
+        
+        game_finished_window.columnconfigure(0, weight=1)
+        game_finished_window.columnconfigure(1, weight=2)
+        game_finished_window.columnconfigure(2, weight=2)
+        game_finished_window.columnconfigure(3, weight=2)
+        game_finished_window.rowconfigure(0, weight=2)
+        game_finished_window.rowconfigure(1, weight=2)
+
+        game_finished_window.title("Final del juego")
+        label_game_result = tk.Label(game_finished_window, textvariable=game_result, bg="#222831", fg="#EEEEEE",font=("Arial", 20))
+        label_game_result.grid(row=0, column=1, columnspan=2, sticky="s")
+        buttonn_exit = tk.Button(game_finished_window, text="Salir", bg="#76ABAE", fg="#31363F", width=15, height=2, borderwidth=1,
+                                 command=lambda: [game_finished_window.destroy(), battle_window.destroy()])
+        buttonn_exit.grid(row=1, column=1, columnspan=2, pady=10, sticky="n")
+                                                    
 
     player = None
     # Verificamos el tipo de personaje que escogió
@@ -152,9 +181,9 @@ def start_battle(class_type: int, name: str):
         enemy_health_label.grid(row=2, column= 3, padx= 20, pady= 20,sticky="n")
 
         #Info de la batalla
-        player_battle_info_label = tk.Label(master=battle_window, textvariable=player_battle_info, bg="#222831", fg="#EEEEEE",font=("Arial", 10))
+        player_battle_info_label = tk.Label(master=battle_window, textvariable=player_battle_info, bg="#222831", fg="#EEEEEE",font=("Arial", 15))
         player_battle_info_label.grid(row= 2, column= 1,pady=60, sticky="s")
-        enemy_battle_info_label = tk.Label(master=battle_window, textvariable=enemy_battle_info, bg="#222831", fg="#EEEEEE",font=("Arial", 10))
+        enemy_battle_info_label = tk.Label(master=battle_window, textvariable=enemy_battle_info, bg="#222831", fg="#EEEEEE",font=("Arial", 15))
         enemy_battle_info_label.grid(row= 2 , column= 3, pady=60, sticky="s")
 
     else:
@@ -188,9 +217,9 @@ info_player = tk.StringVar()
 info = tk.Label(app, text=" ", font=("Arial", 14), bg="#222831", fg="#EEEEEE", textvariable=info_player)
 info.grid(row=4, column=1, padx=20, pady=20)
 
-button_enviar = tk.Button(app, text="Iniciar Aventura!", bg="#76ABAE", fg="#31363F", width=20, height=2, font=("Arial", 17),
+button_send = tk.Button(app, text="Iniciar Aventura!", bg="#76ABAE", fg="#31363F", width=20, height=2, font=("Arial", 17),
                            borderwidth=1, command=lambda: start_battle(type_class.get(), entry.get()))
-button_enviar.grid(row=5, column=1, padx=20, pady=20)
+button_send.grid(row=5, column=1, padx=20, pady=20)
 
 control = tk.Label(app, text=" ", font=("Arial", 14), bg="#222831", fg="#EEEEEE", textvariable=control_var)
 control.grid(row=6, column=1, padx=20, pady=20)

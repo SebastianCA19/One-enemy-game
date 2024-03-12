@@ -10,8 +10,7 @@ class Character:
         self.special_damage = 7
         self.defense = 20
         self.special_defense = 5
-        self.have_magic = True
-    
+
     def calculate_damage(self, base_damage: int, defense: int, is_special_attack: bool) -> float:
         # Seleccionar el tipo de daño (normal o especial)
         damage = self.special_damage if is_special_attack else self.damage
@@ -79,4 +78,3 @@ class super_monster(Character):
         self.special_damage = 10
         self.defense = 20
         self.special_defense = 20
-        self.have_magic = False
